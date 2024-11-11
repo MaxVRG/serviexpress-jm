@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviexpress</title>
+    <link rel="stylesheet" href="{% static 'coreapp/css/styles.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <h1>SERVIEXPRESS</h1>
+            <div class="two-services">
+                <a href="#" class="servicios">Servicios</a>
+                <a href="#" class="reservas">Reservar Hora</a>
+            </div>
+        </div>
+        <div class="navbar-right">
+            <button class="login-button">Iniciar Sesión</button>
+            <button class="admin-button">Admin Panel</button>
+        </div>
+    </nav>
+
+    <!-- Slideshow container -->
+    <div class="slideshow-container">
+
+    <!-- Full-width images with number and caption text -->
+    <div class="mySlides fade">
+      <img src="{% static 'coreapp/img/slider1.webp' %}" style="width:100%">
+    </div>
+  
+    <div class="mySlides fade">
+      <img src="{% static 'coreapp/img/slider2.webp' %}" style="width:100%">
+    </div>
+  
+    <div class="mySlides fade">
+      <img src="{% static 'coreapp/img/slider3.webp' %}" style="width:100%">
+    </div>
+  
+    <!-- Next and previous buttons -->
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  </div>
+  <br>
+  
+  <!-- The dots/circles -->
+  <div style="text-align:center">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+  </div>
+
+    <img src="{% static 'coreapp/img/car.png' %}" class="carlogo">
+    <footer>
+        <p>Contacta con nosotros: info@serviexpress.cl</p>
+    </footer>
+
+    <script src="{% static 'coreapp/js/script.js' %}""></script>
+
+</body>
+</html>
