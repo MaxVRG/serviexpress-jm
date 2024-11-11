@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviexpress - Servicios</title>
+    <link rel="stylesheet" href="{% static 'coreapp/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'coreapp/css/services.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="{% url 'home' %}" class="logo-link">
+                <h1>SERVIEXPRESS</h1>
+            </a>
+            <div class="two-services">
+                <a href="#" class="servicios">Servicios</a>
+                <a href="#" class="reservas">Reservar Hora</a>
+            </div>
+        </div>
+        <div class="navbar-right">
+            <button class="login-button">Iniciar Sesión</button>
+            <button class="admin-button">Admin Panel</button>
+        </div>
+    </nav>
+
+    <div class="services-container">
+
+        <div class="title">
+            <h2>Servicios</h2>
+        </div>
+
+        <div class="service-item1" >
+            <div class="service-left">
+                <h3>Diagnóstico Rápido</h3>
+                <img class="s-images" src="{% static 'coreapp/img/servi1.png' %}" alt="Diagnóstico Rápido">
+            </div>
+            <div class="service-text">
+                <p>Nuestro servicio de diagnóstico rápido está diseñado para identificar cualquier problema en tu vehículo en el menor tiempo posible. 
+                    Utilizamos equipos de última tecnología y técnicas avanzadas de escaneo para analizar el motor, sistema eléctrico, transmisión y 
+                    otros componentes críticos de tu auto. Gracias a nuestro equipo de técnicos altamente capacitados, te entregamos un diagnóstico preciso 
+                    que te permitirá tomar decisiones informadas sin perder tiempo</p>
+            </div>
+        </div>
+
+        <div class="service-item">
+            <div class="service-left">
+                <h3>Cambio de Aceite y Mantenimiento</h3>
+                <img class="s-images" src="{% static 'coreapp/img/servi2.png' %}" alt="Cambio de Aceite y Mantenimiento">
+            </div>
+            <div class="service-text">
+                <p>Mantén tu vehículo en excelente estado con nuestro servicio de cambio de aceite y mantenimiento preventivo. Este servicio incluye la inspección de 
+                    niveles de aceite, líquido de frenos, anticongelante, y otros fluidos esenciales. Además, revisamos el filtro de aire y realizamos una inspección 
+                    visual general para asegurarnos de que tu auto esté listo para recorrer más kilómetros sin inconvenientes. Utilizamos solo aceites y productos de la 
+                    mejor calidad para proteger el motor y maximizar su rendimiento.</p>
+            </div>
+        </div>
+
+        <div class="service-item1">
+            <div class="service-left">
+                <h3>Reparaciones Exprés y Reemplazo de Piezas</h3>
+                <img class="s-images" src="{% static 'coreapp/img/servi3.png' %}" alt="Reparación y Cambio de Piezas">
+            </div>
+            <div class="service-text">
+                <p>Mantén tu vehículo en excelente estado con nuestro servicio de cambio de aceite y mantenimiento preventivo. Este servicio incluye la inspección de niveles de aceite, 
+                    líquido de frenos, anticongelante, y otros fluidos esenciales. Además, revisamos el filtro de aire y realizamos una inspección visual general para asegurarnos de que 
+                    tu auto esté listo para recorrer más kilómetros sin inconvenientes. Utilizamos solo aceites y productos de la mejor calidad para proteger el motor y maximizar su rendimiento.</p>
+            </div>
+        </div>
+    
+        <div class="back-button">
+            <button onclick="window.history.back()">Atrás</button>
+        </div>
+    </div>
+    
+    <img src="{% static 'coreapp/img/car.png' %}" class="carlogo">
+    <footer>
+        <p>Contacta con nosotros: info@serviexpress.cl</p>
+    </footer>
+
+</body>
+</html>
