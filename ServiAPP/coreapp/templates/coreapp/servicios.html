@@ -17,13 +17,17 @@
                 <h1>SERVIEXPRESS</h1>
             </a>
             <div class="two-services">
-                <a href="#" class="servicios">Servicios</a>
-                <a href="#" class="reservas">Reservar Hora</a>
+                <a href="{% url 'servicios' %}" class="servicios">Servicios</a>
+                <a href="{% url 'reservahora' %}" class="reservas">Reservar Hora</a>
             </div>
         </div>
         <div class="navbar-right">
+          <a href="{% url 'login' %}">
             <button class="login-button">Iniciar Sesión</button>
-            <button class="admin-button">Admin Panel</button>
+        </a>
+        <a href="{% url 'adminlogin' %}">
+          <button class="admin-button">Admin Panel</button>
+      </a>
         </div>
     </nav>
 

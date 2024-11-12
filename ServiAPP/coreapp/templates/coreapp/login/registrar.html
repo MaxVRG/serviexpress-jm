@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviexpress - Registrar</title>
+    <link rel="stylesheet" href="{% static 'coreapp/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'coreapp/css/registrar.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="{% url 'home' %}" class="logo-link">
+                <h1>SERVIEXPRESS</h1>
+            </a>
+            <div class="two-services">
+                <a href="{% url 'servicios' %}" class="servicios">Servicios</a>
+                <a href="{% url 'reservahora' %}" class="reservas">Reservar Hora</a>
+            </div>
+        </div>
+        <div class="navbar-right">
+            <a href="{% url 'login' %}">
+                <button class="login-button">Iniciar Sesión</button>
+            </a>
+            <a href="{% url 'adminlogin' %}">
+                <button class="admin-button">Admin Panel</button>
+            </a>
+        </div>
+    </nav>
+
+    <div class="services-container">
+        <div class="title">
+            <h2>Registrar</h2>
+        </div>
+        <div class="container2">
+            <form action="{% url 'registrar' %}" method="post">
+    {% csrf_token %}
+    <!-- Campo de RUN -->
+    <div class="form-group">
+        <label for="run">RUN</label>
+        <input type="text" id="run" name="run" required>
+    </div>
+    
+    <!-- Campo de Nombre -->
+    <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" required>
+    </div>
+
+    <!-- Campo de Apellidos -->
+    <div class="form-group">
+        <label for="apellidos">Apellidos</label>
+        <input type="text" id="apellidos" name="apellidos" required>
+    </div>
+
+    <!-- Campo de Nombre de Usuario -->
+    <div class="form-group">
+        <label for="username">Nombre de Usuario</label>
+        <input type="text" id="username" name="username" required>
+    </div>
+
+    <!-- Campo de Email -->
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    
+    <!-- Campo de Teléfono -->
+    <div class="form-group">
+        <label for="telefono">Teléfono</label>
+        <input type="text" id="telefono" name="telefono" required>
+    </div>
+
+    <!-- Campo de Contraseña -->
+    <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+
+    <!-- Campo de Confirmar Contraseña -->
+    <div class="form-group">
+        <label for="confirm_password">Confirmar Contraseña</label>
+        <input type="password" id="confirm_password" name="confirm_password" required>
+    </div>
+    
+    <!-- Botones de Cancelar y Registrar -->
+    <div class="form-group">
+        <button type="button" onclick="">Cancelar</button>
+        <button type="submit">Registrar</button>
+    </div>
+</form>
+        </div>
+    </div>
+
+    <footer>
+        <p>Contacta con nosotros: info@serviexpress.cl</p>
+    </footer>
+</body>
+</html>
