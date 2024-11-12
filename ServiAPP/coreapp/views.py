@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
 from django.contrib import messages
 from django.urls import reverse
-from django.core.exceptions import ValidationError
+from .forms import UsuarioRegistroForm
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout
 
 def home(request):
     return render(request, 'coreapp/home.html')
@@ -25,49 +26,39 @@ def registrar(request):
 
 
 
-
-
-
-
-def register(request):
-    if request.method == 'POST':
-        run = request.POST['run']
-        nombre = request.POST['nombre']
-        apellidos = request.POST['apellidos']
-        username = request.POST['username']
-        email = request.POST['email']
-        telefono = request.POST['telefono']
-        password = request.POST['password']
-        confirm_password = request.POST['confirm_password']
-        
-        # Validar que las contraseñas coincidan
-        if password != confirm_password:
-            messages.error(request, "Las contraseñas no coinciden.")
-            return render(request, 'coreapp/register.html')
-        
-        # Validar si el nombre de usuario ya existe
-        if User.objects.filter(username=username).exists():
-            messages.error(request, "El nombre de usuario ya está en uso.")
-            return render(request, 'coreapp/register.html')
-        
-        # Validar si el correo electrónico ya está registrado
-        if User.objects.filter(email=email).exists():
-            messages.error(request, "El correo electrónico ya está registrado.")
-            return render(request, 'coreapp/register.html')
-        
-        # Crear el usuario
-        user = User.objects.create_user(
-            username=username,
-            first_name=nombre,
-            last_name=apellidos,
-            email=email,
-            password=password
-        )
-        
-        # Guardar otros datos adicionales si es necesario (ejemplo: run o teléfono)
-        user.save()
-        
-        messages.success(request, "Registro exitoso. Ahora puedes iniciar sesión.")
-        return redirect(reverse('login'))
+def registrar_usuario(request):
+    if request.method == "POST":
+        form = UsuarioRegistroForm(request.POST)
+        if form.is_valid():
+            usuario = form.save(commit=False)
+            usuario.password = form.cleaned_data["password"]  # Puedes agregar hashing aquí
+            usuario.save()
+            return redirect("login")  # Redirige al usuario al inicio de sesión
+    else:
+        form = UsuarioRegistroForm()
     
-    return render(request, 'coreapp/login/registrar.html')
+    return render(request, "coreapp/login/registrar.html", {"form": form})
+
+
+def login_view(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        
+        user = authenticate(request, email=email, password=password)
+        
+        if user is not None:
+            login(request, user)
+            messages.success(request, 'Inicio de sesión exitoso')  # Mensaje de éxito
+            return redirect('home')  # Redirige al inicio o a otra página
+
+        else:
+            messages.error(request, 'Credenciales incorrectas')  # Mensaje de error
+            return render(request, 'coreapp/login/login.html')
+    
+    return render(request, 'coreapp/login/login.html')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')

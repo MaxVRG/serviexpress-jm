@@ -5,56 +5,35 @@
     background-color: #D9D9D9;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    padding-top: 1%; 
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+/* Contenedor del formulario */
 .container2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
     padding: 20px;
 }
 
-/* Título */
-.services-container .title h2 {
-    text-align: center;
-    font-size: 2em;
-    margin-bottom: 20px;
-    color: #333;
-    font-family: 'Inter', sans-serif;
-}
-
-/* Estilos para los campos de formulario */
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    font-size: 1.1em;
-    color: #333;
-    font-family: 'Inter', sans-serif;
-    margin-bottom: 5px;
-}
-
-.form-group input[type="text"],
-.form-group input[type="email"],
-.form-group input[type="password"] {
+.formulario input[type="text"],
+.formulario input[type="email"],
+.formulario input[type="password"] {
     width: 100%;
     padding: 10px;
-    font-size: 1em;
-    border: 1px solid #ccc;
+    margin: 3px 0;
+    border: 1px solid #c0c0c0;
     border-radius: 5px;
-    box-sizing: border-box;
-}
-
-/* Botones de cancelar y registrar */
-.button-group {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+    font-size: 16px;
 }
 
 .cancel-button, .register-button {
     width: 48%;
     padding: 10px;
-    font-size: 1.2em;
+    font-size: 1em;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -78,24 +57,11 @@
     background-color: #55A4B1;
 }
 
-/* Contenedor para el texto de "No tienes cuenta" */
-.divider-container {
-    margin-top: 15px;
+/* Estilo para el título */
+.title h2 {
     text-align: center;
-    background-color: #b4b4b4;
-    font-size: 1.1em;
-}
-
-.no-account {
-    font-size: 1.1em;
-    color: #ffffff;
-}
-
-.no-account a {
-    color: #ffffff;
-    text-decoration: none;
-}
-
-.no-account a:hover {
-    text-decoration: underline;
+    font-size: 2em;
+    color: #333;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 20px;
 }

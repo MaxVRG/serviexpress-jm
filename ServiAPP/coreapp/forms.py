@@ -8,7 +8,13 @@ class UsuarioRegistroForm(forms.ModelForm):
         model = Usuarios
         fields = ['run', 'nombre', 'apellidos', 'nombre_usuario', 'email', 'telefono', 'password']
         widgets = {
-            'password': forms.PasswordInput,
+            'run': forms.TextInput(attrs={'class': 'form-control'}),
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'apellidos': forms.TextInput(attrs={'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control'}),
         }
 
     def clean(self):
@@ -20,3 +26,4 @@ class UsuarioRegistroForm(forms.ModelForm):
             self.add_error("confirmar_password", "Las contraseñas no coinciden.")
         
         return cleaned_data
+
