@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviexpress - Iniciar Sesión</title>
+    <link rel="stylesheet" href="{% static 'coreapp/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'coreapp/css/login.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="{% url 'home' %}" class="logo-link">
+                <h1>SERVIEXPRESS</h1>
+            </a>
+            <div class="two-services">
+                <a href="{% url 'servicios' %}" class="servicios">Servicios</a>
+                <a href="{% url 'reservahora' %}" class="reservas">Reservar Hora</a>
+            </div>
+        </div>
+        <div class="navbar-right">
+            {% if user.is_authenticated %}
+            <span>Bienvenido, {{ user.nombre_completo }}</span>
+                <a href="{% url 'logout' %}">
+                    <button class="login-button">Cerrar Sesión</button>
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}">
+                    <button class="login-button">Iniciar Sesión</button>
+                </a>
+                <a href="{% url 'adminlogin' %}">
+                    <button class="admin-button">Admin Panel</button>
+                </a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="services-container">       
+        <div class="title">
+            <h2>Admin Login</h2>
+        </div>
+        <div class="container2">
+            <div class="formulario">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="login-button2">Iniciar Sesión</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <img src="{% static 'coreapp/img/car.png' %}" class="carlogo">
+    <footer>
+        <p>Contacta con nosotros: info@serviexpress.cl</p>
+    </footer>
+</body>
+</html>

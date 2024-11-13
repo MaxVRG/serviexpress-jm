@@ -16,6 +16,8 @@ def reservahora(request):
 def adminlogin(request):
     return render(request, 'coreapp/login/adminlogin.html')
 
+def adminpanel(request):
+    return render(request, 'coreapp/adminpanel.html')
 def register_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -47,3 +49,22 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
+
+
+def admin_login_view(request):
+    if request.method == 'POST':
+        form = CustomAuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            if user.is_superuser:  
+                login(request, user)
+                messages.success(request, 'Bienvenido al panel de administración.')
+                return redirect('/adminpanel/')  
+            else:
+                messages.error(request, 'Acceso denegado. Solo los administradores pueden ingresar.')
+                return redirect('adminlogin')
+        else:
+            messages.error(request, 'Email o contraseña incorrectos.')
+    else:
+        form = CustomAuthenticationForm()
+    return render(request, 'coreapp/login/adminlogin.html', {'form': form})
