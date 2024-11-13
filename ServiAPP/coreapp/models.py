@@ -1,21 +1,37 @@
 from django.db import models
-from django.contrib.auth.hashers import make_password
-from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator
 
-class Usuarios(models.Model):
-    run = models.CharField(max_length=12)
-    nombre = models.CharField(max_length=100)
-    apellidos = models.CharField(max_length=100)
-    nombre_usuario = models.CharField(max_length=100)
-    email = models.EmailField()
-    telefono = models.CharField(max_length=15)
-    password = models.CharField(max_length=128)
-
-    def save(self, *args, **kwargs):
-        if not self.password.startswith('pbkdf2_sha256$'):  
-            self.password = make_password(self.password)
-        super().save(*args, **kwargs)
+class CustomUser(AbstractUser):
+    run = models.CharField(
+        max_length=12, 
+        unique=True,
+        validators=[
+            RegexValidator(
+                regex=r'^\d{7,8}-[\dkK]$',
+                message='RUN debe tener formato 12345678-9'
+            )
+        ]
+    )
+    telefono = models.CharField(
+        max_length=15,
+        validators=[
+            RegexValidator(
+                regex=r'^\+?1?\d{9,15}$',
+                message='Número de teléfono debe estar en formato: +999999999'
+            )
+        ]
+    )
+    
+    # Hacer que email sea obligatorio y único
+    email = models.EmailField(unique=True)
+    
+    # Campo para nombre completo
+    nombre_completo = models.CharField(max_length=200)
+    
+    # Definir qué campo se usará para el login
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'run', 'nombre_completo', 'telefono']
 
     def __str__(self):
-
-        return f"{self.nombre} {self.apellidos}"
+        return self.email

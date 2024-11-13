@@ -22,12 +22,19 @@
             </div>
         </div>
         <div class="navbar-right">
-          <a href="{% url 'login' %}">
-            <button class="login-button">Iniciar Sesión</button>
-        </a>
-        <a href="{% url 'adminlogin' %}">
-          <button class="admin-button">Admin Panel</button>
-      </a>
+            {% if user.is_authenticated %}
+            <span>Bienvenido, {{ user.nombre_completo }}</span>
+                <a href="{% url 'logout' %}">
+                    <button class="login-button">Cerrar Sesión</button>
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}">
+                    <button class="login-button">Iniciar Sesión</button>
+                </a>
+                <a href="{% url 'adminlogin' %}">
+                    <button class="admin-button">Admin Panel</button>
+                </a>
+            {% endif %}
         </div>
     </nav>
 

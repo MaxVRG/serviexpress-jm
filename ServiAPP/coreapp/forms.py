@@ -1,29 +1,44 @@
 from django import forms
-from .models import Usuarios
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .models import CustomUser
 
-class UsuarioRegistroForm(forms.ModelForm):
-    confirmar_password = forms.CharField(widget=forms.PasswordInput, label="Confirmar Contraseña")
+class CustomUserCreationForm(UserCreationForm):
+    password1 = forms.CharField(
+        label='Contraseña',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        help_text='Tu contraseña debe contener al menos 8 caracteres.'
+    )
+    password2 = forms.CharField(
+        label='Confirmar contraseña',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        help_text='Ingresa la misma contraseña para verificación.'
+    )
 
-    class Meta:
-        model = Usuarios
-        fields = ['run', 'nombre', 'apellidos', 'nombre_usuario', 'email', 'telefono', 'password']
-        widgets = {
-            'run': forms.TextInput(attrs={'class': 'form-control'}),
-            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
-            'apellidos': forms.TextInput(attrs={'class': 'form-control'}),
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
-            'password': forms.PasswordInput(attrs={'class': 'form-control'}),
+    class Meta(UserCreationForm.Meta):
+        model = CustomUser
+        fields = ('run', 'email', 'nombre_completo', 'telefono', 'username', 'password1', 'password2')
+        labels = {
+            'run': 'RUN',
+            'email': 'Correo electrónico',
+            'nombre_completo': 'Nombre completo',
+            'telefono': 'Teléfono',
+            'username': 'Nombre de usuario',
         }
-
-    def clean(self):
-        cleaned_data = super().clean()
-        password = cleaned_data.get("password")
-        confirmar_password = cleaned_data.get("confirmar_password")
-
-        if password != confirmar_password:
-            self.add_error("confirmar_password", "Las contraseñas no coinciden.")
+        help_texts = {
+            'username': None, 
+        }
         
-        return cleaned_data
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
 
+class CustomAuthenticationForm(AuthenticationForm):
+    username = forms.EmailField(
+        label='Correo electrónico',
+        widget=forms.EmailInput(attrs={'class': 'form-control'})
+    )
+    password = forms.CharField(
+        label='Contraseña',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+    )
