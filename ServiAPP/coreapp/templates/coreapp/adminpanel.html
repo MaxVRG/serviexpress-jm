@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serviexpress - Iniciar Sesión</title>
     <link rel="stylesheet" href="{% static 'coreapp/css/styles.css' %}">
-    <link rel="stylesheet" href="{% static 'coreapp/css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'coreapp/css/adminpanel.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
 </head>
 <body>
@@ -17,8 +17,7 @@
                 <h1>SERVIEXPRESS</h1>
             </a>
             <div class="two-services">
-                <a href="{% url 'servicios' %}" class="servicios">Servicios</a>
-                <a href="{% url 'reservahora' %}" class="reservas">Reservar Hora</a>
+                <h2>Panel de Administración</h2>
             </div>
         </div>
         <div class="navbar-right">
@@ -37,19 +36,34 @@
             {% endif %}
         </div>
     </nav>
+    
+        <div class="services-container">
 
-    <div class="services-container">
+            <div class="name">
+            <h2><span class="tittle">{{ user.username }}</span></h2>
+            </div>  
+
+            <div class="recuadros">
+                <h1>Registrar empleado</h1>
+            </div>
+
+            <div class="recuadros">
+                <h1>Registrar proveedor</h1>
+            </div>
+
+            <div class="recuadros">
+                <h1>Registrar Servicio</h1>
+            </div>
+
+            <div class="recuadros">
+                <h1>Pedidos</h1>
+            </div>
+
+            <div class="recuadros">
+                <H1>Informes</H1>
+            </div>
+
 
         </div>
-
-
-
-
-
-
-
-        <footer>
-            <p>Contacta con nosotros: info@serviexpress.cl</p>
-        </footer>
     </body>
     </html>
