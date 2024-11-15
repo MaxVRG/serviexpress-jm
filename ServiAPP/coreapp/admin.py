@@ -1,13 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
+from .models import Empleado
 
 class CustomUserAdmin(UserAdmin):
     list_display = ('email', 'username', 'run', 'nombre_completo', 'telefono', 'is_staff')
     search_fields = ('email', 'username', 'run', 'nombre_completo')
     ordering = ('email',)
     
-    # Agregar estos campos para que funcione correctamente el admin
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
@@ -22,5 +22,13 @@ class CustomUserAdmin(UserAdmin):
         ('Fechas Importantes', {'fields': ('last_login', 'date_joined')}),
     )
 
-# Registrar el modelo y su clase admin
+
 admin.site.register(CustomUser, CustomUserAdmin)
+
+
+@admin.register(Empleado)
+class EmpleadoAdmin(admin.ModelAdmin):
+    list_display = ('run', 'nombres', 'apellidos', 'email', 'telefono', 'cargo') 
+    search_fields = ('run', 'nombres', 'apellidos', 'email')  
+    list_filter = ('cargo',)  
+    ordering = ('nombres',)

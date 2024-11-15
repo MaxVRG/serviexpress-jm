@@ -17,7 +17,7 @@
 
 
 .two-services{
-    margin-left: 75%;
+    margin-left: 45%;
     max-width: 100%;
     white-space: nowrap;  
     font-size: 1.4em;  
@@ -48,7 +48,7 @@
     font-size: 1.1em;
     margin: 0;
     padding: 10px;
-    flex: 1 1 calc(33% - 10px); /* Hacer que los recuadros ocupen el 33% del contenedor */
+    flex: 1 1 calc(33% - 10px); 
     box-sizing: border-box; 
 }
 
@@ -72,3 +72,10 @@
     
 }
 
+.btn-panel{
+    border: none;
+    background: none;
+    font-size: 1.6em;
+    color: #000000;
+    font-weight: bold;
+}

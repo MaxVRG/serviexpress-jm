@@ -60,7 +60,7 @@
 }
 
 .agendar-button {
-    background-color: #8dc78f; /* Verde para Agendar */
+    background-color: #8dc78f; 
 }
 
 .agendar-button:hover {
@@ -68,7 +68,7 @@
 }
 
 .cancelar-button {
-    background-color: #BDBEB7; /* Rojo para Cancelar */
+    background-color: #BDBEB7; 
 }
 
 .cancelar-button:hover {

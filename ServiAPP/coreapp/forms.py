@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import CustomUser
+from .models import Empleado
+from .models import Servicio
+
 
 class CustomUserCreationForm(UserCreationForm):
     password1 = forms.CharField(
@@ -42,3 +45,42 @@ class CustomAuthenticationForm(AuthenticationForm):
         label='Contraseña',
         widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
+
+
+class EmpleadoForm(forms.ModelForm):
+    class Meta:
+        model = Empleado
+        fields = ['run', 'nombres', 'apellidos', 'email', 'telefono', 'cargo']
+        labels = {
+            'run': 'RUN',
+            'nombres': 'Nombres',
+            'apellidos': 'Apellidos',
+            'email': 'Correo electrónico',
+            'telefono': 'Teléfono',
+            'cargo': 'Cargo',
+        }
+        widgets = {
+            'run': forms.TextInput(attrs={'class': 'form-control'}),
+            'nombres': forms.TextInput(attrs={'class': 'form-control'}),
+            'apellidos': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'class': 'form-control'}),
+            'cargo': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+
+
+class ServicioForm(forms.ModelForm):
+    class Meta:
+        model = Servicio
+        fields = ['nombre', 'descripcion', 'precio']
+        labels = {
+            'nombre': 'Nombre del Servicio',
+            'descripcion': 'Descripción del Servicio',
+            'precio': 'Precio del Servicio',
+        }
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'precio': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
+        }

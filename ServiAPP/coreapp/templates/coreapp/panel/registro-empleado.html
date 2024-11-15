@@ -1,12 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serviexpress - Iniciar Sesión</title>
+    <title>Registro de Empleado</title>
     <link rel="stylesheet" href="{% static 'coreapp/css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'coreapp/css/adminpanel.css' %}">
+    <link rel="stylesheet" href="{% static 'coreapp/css/popup.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
 </head>
 <body>
@@ -22,7 +23,7 @@
         </div>
         <div class="navbar-right">
             {% if user.is_authenticated %}
-            <span>Bienvenido, {{ user.nombre_completo }}</span>
+                <span>Bienvenido, {{ user.nombre_completo }}</span>
                 <a href="{% url 'logout' %}">
                     <button class="login-button">Cerrar Sesión</button>
                 </a>
@@ -36,11 +37,12 @@
             {% endif %}
         </div>
     </nav>
-    
-        <div class="services-container">
 
+    <div class="main-container">
+        <!-- Contenedor para el panel de servicios (con un tamaño fijo) -->
+        <div class="services-container">
             <div class="name">
-            <h2><span class="tittle">{{ user.username }}</span></h2>
+                <h2><span class="tittle">{{ user.username }}</span></h2>
             </div>  
 
             <div class="recuadros">
@@ -54,9 +56,7 @@
             </div>
 
             <div class="recuadros">
-                <a href="{% url 'registro_servicio' %}">
-                    <button class="btn-panel">Registrar Servicio</button>
-                </a>
+                <h1>Registrar Servicio</h1>
             </div>
 
             <div class="recuadros">
@@ -66,9 +66,39 @@
             <div class="recuadros">
                 <H1>Informes</H1>
             </div>
-
-
         </div>
-        <script src="{% static 'coreapp/js/script.js' %}"></script>
-    </body>
-    </html>
+
+        <!-- Contenedor para el formulario -->
+        <div class="container">
+            <h2>Registrar nuevo empleado</h2>
+
+            <form action="{% url 'registro_empleado' %}" method="POST">
+                {% csrf_token %}
+                <label for="run">RUN</label>
+                <input type="text" id="run" name="run" required><br>
+
+                <label for="nombres">Nombres</label>
+                <input type="text" id="nombres" name="nombres" required><br>
+
+                <label for="apellidos">Apellidos</label>
+                <input type="text" id="apellidos" name="apellidos" required><br>
+
+                <label for="email">Correo Electrónico</label>
+                <input type="email" id="email" name="email" required><br>
+
+                <label for="telefono">Teléfono</label>
+                <input type="text" id="telefono" name="telefono" required><br>
+
+                <label for="cargo">Cargo</label>
+                <input type="text" id="cargo" name="cargo" required><br>
+
+                <button type="submit" class="btn-primary">Registrar</button>
+            </form>
+
+            <br>
+            <button class="cancelar-button" onclick="window.history.back()">Cancelar</button>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -3,6 +3,8 @@ from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
+from .forms import EmpleadoForm
+from .forms import ServicioForm
 
 def home(request):
     return render(request, 'coreapp/home.html')
@@ -68,3 +70,28 @@ def admin_login_view(request):
     else:
         form = CustomAuthenticationForm()
     return render(request, 'coreapp/login/adminlogin.html', {'form': form})
+
+
+
+def registrar_empleado(request):
+    if request.method == 'POST':
+        form = EmpleadoForm(request.POST)
+        if form.is_valid():
+            form.save()  
+            return redirect('adminpanel')  
+    else:
+        form = EmpleadoForm()
+    
+    return render(request, 'coreapp/panel/registro-empleado.html', {'form': form})
+
+
+def registrar_servicio(request):
+    if request.method == 'POST':
+        form = ServicioForm(request.POST)
+        if form.is_valid():
+            form.save()  
+            return redirect('adminpanel')  
+    else:
+        form = ServicioForm()
+    
+    return render(request, 'coreapp/panel/registro-servicio.html', {'form': form})
