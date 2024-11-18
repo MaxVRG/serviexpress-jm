@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from .forms import EmpleadoForm
 from .forms import ServicioForm
+from .models import Proveedor, Producto
+from .forms import ProveedorForm, ProductoForm
+from django.shortcuts import get_object_or_404
 
 def home(request):
     return render(request, 'coreapp/home.html')
@@ -95,3 +98,32 @@ def registrar_servicio(request):
         form = ServicioForm()
     
     return render(request, 'coreapp/panel/registro-servicio.html', {'form': form})
+
+
+
+def registro_proveedor(request):
+    if request.method == 'POST':
+        proveedor_form = ProveedorForm(request.POST)
+        producto_form = ProductoForm(request.POST, request.FILES)
+        if proveedor_form.is_valid() and producto_form.is_valid():
+            proveedor = proveedor_form.save()
+            producto = producto_form.save(commit=False)
+            producto.proveedor = proveedor
+            producto.save()
+            return redirect('adminpanel') 
+    else:
+        proveedor_form = ProveedorForm()
+        producto_form = ProductoForm()
+
+    proveedores = Proveedor.objects.prefetch_related('productos').all()
+    return render(request, 'coreapp/panel/registro-proveedor.html', {
+        'proveedor_form': proveedor_form,
+        'producto_form': producto_form,
+        'proveedores': proveedores,
+    })
+
+def eliminar_proveedor(request, id):
+    if request.method == "POST":
+        proveedor = get_object_or_404(Proveedor, id=id)
+        proveedor.delete()
+        return redirect('registro_proveedor')  # Redirige a la lista después de eliminar

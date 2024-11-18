@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Empleado</title>
+    <title>Registro Proveedores</title>
     <link rel="stylesheet" href="{% static 'coreapp/css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'coreapp/css/adminpanel.css' %}">
     <link rel="stylesheet" href="{% static 'coreapp/css/popup.css' %}">
+    <link rel="stylesheet" href="{% static 'coreapp/css/proveedores.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
 </head>
 <body>
@@ -71,19 +72,78 @@
             </div>
         </div>
 
-        <div class="container">
-            <h2>Registrar nuevo servicio</h2>
+        <div class="container2">
+            <h1>Registrar Proveedor</h1>
+    <form method="post" enctype="multipart/form-data" class="container">
+        {% csrf_token %}
+        <h2>Datos del Proveedor</h2>
+        {{ proveedor_form.as_p }}
+        <h2>Datos del Producto</h2>
+        {{ producto_form.as_p }}
+        <button type="submit" class="btn-submit">Añadir Proveedor</button>
+    </form>
+
+    <h1>Lista de Proveedores</h1>
+    <ul class="proveedores-lista">
+        {% for proveedor in proveedores %}
+            <li>
+                <div class="campo">
+                    <span class="campo-titulo">Empresa:</span> 
+                    <strong>{{ proveedor.empresa }}</strong>
+                </div>
+                <div class="campo">
+                    <span class="campo-titulo">Correo:</span> 
+                    {{ proveedor.correo }}
+                </div>
+                <div class="campo">
+                    <span class="campo-titulo">Rubro:</span> 
+                    {{ proveedor.rubro }}
+                </div>
+        
+                <h3>Productos:</h3>
+                <div class="productos-contenedor">
+                    {% for producto in proveedor.productos.all %}
+                        <div class="producto-item">
+                            <div class="campo">
+                                <span class="campo-titulo">Imagen:</span>
+                                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+                            </div>
+                            <div class="campo">
+                                <span class="campo-titulo">Nombre:</span> 
+                                {{ producto.nombre }}
+                            </div>
+                            <div class="campo">
+                                <span class="campo-titulo">Cantidad:</span> 
+                                {{ producto.cantidad }}
+                            </div>
+
+                            <form method="POST" action="{% url 'eliminar_proveedor' proveedor.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-eliminar">Eliminar Proveedor</button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                </div>
     
-            <form action="{% url 'registro_servicio' %}" method="POST">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn-primary">Registrar</button>
-            </form>
+            </li>
+        {% endfor %}
+    </ul>
     
             <br>
             <button class="cancelar-button" onclick="window.history.back()">Cancelar</button>
         </div>
     </div>
 
+
+
+
+
+
+
 </body>
 </html>
+
+
+
+
+

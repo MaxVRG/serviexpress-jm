@@ -58,9 +58,9 @@ class Empleado(models.Model):
 
 class Servicio(models.Model):
     id = models.AutoField(primary_key=True)  
-    nombre = models.CharField(max_length=200, help_text='Nombre del servicio')
-    descripcion = models.TextField(help_text='Descripción del servicio')
-    precio = models.DecimalField(max_digits=10, decimal_places=2, help_text='Precio del servicio')
+    nombre = models.CharField(max_length=200, help_text='')
+    descripcion = models.TextField(help_text='')
+    precio = models.DecimalField(max_digits=10, decimal_places=2, help_text='')
 
     def __str__(self):
         return self.nombre
@@ -68,3 +68,21 @@ class Servicio(models.Model):
     class Meta:
         verbose_name = 'Servicio'
         verbose_name_plural = 'Servicios'   
+
+
+class Proveedor(models.Model):
+    empresa = models.CharField(max_length=100)
+    correo = models.EmailField()
+    rubro = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.empresa
+
+class Producto(models.Model):
+    proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, related_name='productos')
+    imagen = models.ImageField(upload_to='productos/', null=True, blank=True)
+    nombre = models.CharField(max_length=100)
+    cantidad = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f'{self.nombre} - {self.proveedor.empresa}'

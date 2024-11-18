@@ -39,7 +39,6 @@
     </nav>
 
     <div class="main-container">
-        <!-- Contenedor para el panel de servicios (con un tamaño fijo) -->
         <div class="services-container">
             <div class="name">
                 <h2><span class="tittle">{{ user.username }}</span></h2>
@@ -52,11 +51,15 @@
             </div>
 
             <div class="recuadros">
-                <h1>Registrar proveedor</h1>
+                <a href="{% url 'registro_proveedor' %}">
+                    <button class="btn-panel">Registrar Proveedor</button>
+                </a>
             </div>
 
             <div class="recuadros">
-                <h1>Registrar Servicio</h1>
+                <a href="{% url 'registro_servicio' %}">
+                    <button class="btn-panel">Registrar Servicio</button>
+                </a>
             </div>
 
             <div class="recuadros">
@@ -68,7 +71,6 @@
             </div>
         </div>
 
-        <!-- Contenedor para el formulario -->
         <div class="container">
             <h2>Registrar nuevo empleado</h2>
 

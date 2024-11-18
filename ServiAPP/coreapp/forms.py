@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import CustomUser
 from .models import Empleado
-from .models import Servicio
+from .models import Servicio,Proveedor,Producto
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -84,3 +84,14 @@ class ServicioForm(forms.ModelForm):
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
             'precio': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
         }
+
+
+class ProveedorForm(forms.ModelForm):
+    class Meta:
+        model = Proveedor
+        fields = ['empresa', 'correo', 'rubro']
+
+class ProductoForm(forms.ModelForm):
+    class Meta:
+        model = Producto
+        fields = ['imagen', 'nombre', 'cantidad']

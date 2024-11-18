@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
-from .models import Empleado
+from .models import Empleado,Servicio,Producto,Proveedor
 
 class CustomUserAdmin(UserAdmin):
     list_display = ('email', 'username', 'run', 'nombre_completo', 'telefono', 'is_staff')
@@ -32,3 +32,21 @@ class EmpleadoAdmin(admin.ModelAdmin):
     search_fields = ('run', 'nombres', 'apellidos', 'email')  
     list_filter = ('cargo',)  
     ordering = ('nombres',)
+
+@admin.register(Servicio)
+class ServicioAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'descripcion', 'precio')
+    search_fields = ('nombre',)
+    list_filter = ('precio',)
+
+
+
+@admin.register(Proveedor)
+class ProveedorAdmin(admin.ModelAdmin):
+    list_display = ('empresa', 'correo', 'rubro')
+    search_fields = ('empresa', 'rubro')
+
+@admin.register(Producto)
+class ProductoAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'cantidad', 'proveedor')
+    search_fields = ('nombre', 'proveedor__empresa')
