@@ -42,42 +42,36 @@
         <div class="title">
             <h2>Reservar Hora</h2>
         </div>
-        
-        <!-- Campos de entrada para RUN, Marca y Modelo -->
-        <div class="form-group">
-            <label for="run">RUN:</label>
-            <input type="text" id="run" name="run" placeholder="Ingrese su RUN">
-        </div>
-        <div class="form-group">
-            <label for="marca">MARCA:</label>
-            <input type="text" id="marca" name="marca" placeholder="Ingrese la marca del vehículo">
-        </div>
-        <div class="form-group">
-            <label for="modelo">MODELO:</label>
-            <input type="text" id="modelo" name="modelo" placeholder="Ingrese el modelo del vehículo">
-        </div>
-        
-        <!-- Calendario -->
-        <div class="form-group">
-            <label for="fecha">Fecha de la reserva:</label>
-            <input type="date" id="fecha" name="fecha">
-        </div>
-        
-        <!-- Botones -->
-        <div class="button-group">
-            <button class="agendar-button">Agendar</button>
-            <button class="cancelar-button" onclick="window.history.back()">Cancelar</button>
-        </div>
+
+        <form method="POST" action="{% url 'reservahora' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.run.id_for_label }}">RUN:</label>
+                {{ form.run }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.marca.id_for_label }}">Marca:</label>
+                {{ form.marca }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.modelo.id_for_label }}">Modelo:</label>
+                {{ form.modelo }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.fecha_reserva.id_for_label }}">Fecha de la reserva:</label>
+                {{ form.fecha_reserva }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.hora_reserva.id_for_label }}">Hora de la reserva:</label>
+                {{ form.hora_reserva }}
+            </div>
+            <button type="submit" class="agendar-button">Agendar</button>
+            <button type="button" onclick="window.history.back()" class="cancelar-button">Cancelar</button>
+        </form>
     </div>
 
     </div>
 
-
-
-
-
-
-   
     <img src="{% static 'coreapp/img/car.png' %}" class="carlogo">
     <footer>
         <p>Contacta con nosotros: info@serviexpress.cl</p>

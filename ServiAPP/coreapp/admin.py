@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
-from .models import Empleado,Servicio,Producto,Proveedor,Pedido
+from .models import Empleado,Servicio,Producto,Proveedor,Pedido,Reserva,Boleta
 
 class CustomUserAdmin(UserAdmin):
     list_display = ('email', 'username', 'run', 'nombre_completo', 'telefono', 'is_staff')
@@ -51,3 +51,17 @@ class ProveedorAdmin(admin.ModelAdmin):
 class ProductoAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'cantidad', 'proveedor')
     search_fields = ('nombre', 'proveedor__empresa')
+
+
+@admin.register(Reserva)
+class ReservaAdmin(admin.ModelAdmin):
+    list_display = ('run', 'marca', 'modelo', 'fecha_reserva', 'hora_reserva')
+    list_filter = ('fecha_reserva', 'marca')
+    search_fields = ('run', 'modelo', 'marca')
+
+
+@admin.register(Boleta)
+class BoletaAdmin(admin.ModelAdmin):
+    list_display = ('rut', 'direccion', 'fecha', 'total', 'impresa')  
+    search_fields = ('rut', 'direccion')  
+    ordering = ('-fecha',)  

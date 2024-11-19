@@ -22,4 +22,7 @@ urlpatterns = [
     path('realizar_pedido/<int:proveedor_id>/', views.realizar_pedido, name='realizar_pedido'),
     path('verpedidos/', views.vista_pedidos, name='verpedidos'),
     path('eliminar_pedido/<int:pedido_id>/', views.eliminar_pedido, name='eliminar_pedido'),
+    path('informes/', views.informes, name='informes'),
+    path('generar_boleta/', views.generar_boleta, name='generar_boleta'),
+    path('generar_pedido/', views.generar_pedido, name='generar_pedido'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

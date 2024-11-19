@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import CustomUser
 from .models import Empleado
-from .models import Servicio,Proveedor,Producto
+from .models import Servicio,Proveedor,Producto,Reserva, Boleta
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -94,4 +94,30 @@ class ProveedorForm(forms.ModelForm):
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = ['imagen', 'nombre', 'cantidad']
+        fields = ['imagen', 'nombre', 'cantidad', 'precio']
+
+
+class ReservaForm(forms.ModelForm):
+    class Meta:
+        model = Reserva
+        fields = ['run', 'marca', 'modelo', 'fecha_reserva', 'hora_reserva']
+        widgets = {
+            'fecha_reserva': forms.DateInput(attrs={'type': 'date'}),
+            'hora_reserva': forms.TimeInput(attrs={'type': 'time'}),
+        }
+
+
+class BoletaForm(forms.ModelForm):
+    class Meta:
+        model = Boleta
+        fields = ['rut', 'direccion', 'fecha', 'descripcion_servicios', 'total']
+        widgets = {
+            'fecha': forms.DateInput(format='%d/%m/%Y', attrs={'type': 'date'}),
+            'descripcion_servicios': forms.Textarea(attrs={'rows': 4, 'cols': 20}),
+        }
+    
+    def clean_rut(self):
+        rut = self.cleaned_data.get('rut')
+        if not rut: 
+            raise forms.ValidationError("El RUT es obligatorio.")
+        return rut

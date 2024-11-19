@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Boleta</title>
+    <link rel="stylesheet" href="{% static 'coreapp/css/boleta.css' %}">
+</head>
+<body>
+    {% block content %}
+    <h2>Generar Boleta</h2>
+
+    {% if boleta %}
+    <div class="boleta">
+        <div class="left-section">
+            <h3>Serviexpress</h3>
+            <p>RUT: 99.999.999-9</p>
+            <p>Av. Ejemplo 556</p>
+        </div>
+
+        <div class="right-section">
+            <div class="title-right">
+                <p class="boldbold">Boleta de ventas y servicios</p>
+            </div>
+            <p class="fecha">Fecha: {{ boleta.fecha }}</p>
+        </div>
+
+        <div>
+            <h4>Descripción de los servicios:</h4>
+            <!-- Usar <pre> para preservar los saltos de línea -->
+            <pre>{{ boleta.descripcion_servicios }}</pre>
+        </div>
+        <p><strong>Total: ${{ boleta.total }}</strong></p> 
+    </div>
+    <div class="imp">
+        <button onclick="imprimirBoleta()" class="btn-imprimir">Imprimir Boleta</button>
+    </div>
+    {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="guardar-btn">Guardar</button>
+            <a href="{% url 'adminpanel' %}">
+                <button type="button" class="cancelar-button">Cancelar</button>
+            </a>
+        </form>
+    {% endblock %}
+    
+
+    <script>
+        function imprimirBoleta() {
+            window.print(); 
+        }
+    </script>
+</body>
+</html>

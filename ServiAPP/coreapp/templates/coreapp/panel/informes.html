@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Empleado</title>
+    <title>Panel de Administración</title>
     <link rel="stylesheet" href="{% static 'coreapp/css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'coreapp/css/adminpanel.css' %}">
     <link rel="stylesheet" href="{% static 'coreapp/css/popup.css' %}">
+    <link rel="stylesheet" href="{% static 'coreapp/css/informes.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <!-- Navbar -->
@@ -39,10 +41,11 @@
     </nav>
 
     <div class="main-container">
+        
         <div class="services-container">
             <div class="name">
                 <h2><span class="tittle">{{ user.username }}</span></h2>
-            </div>  
+            </div>
 
             <div class="recuadros">
                 <a href="{% url 'registro_empleado' %}">
@@ -75,19 +78,62 @@
             </div>
         </div>
 
-        <div class="container">
-            <h2>Registrar nuevo servicio</h2>
+        <div class="actions-container">
+            <div class="stats">
+                <div class="chart-container">
+                    <canvas id="visitasChart"></canvas>
+                </div>
     
-            <form action="{% url 'registro_servicio' %}" method="POST">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn-primary">Registrar</button>
-            </form>
-    
-            <br>
-            <button class="cancelar-button" onclick="window.history.back()">Cancelar</button>
+                <div class="estadisticas">
+                    <div class="stat-card">
+                        <h3>Visitas de este mes</h3>
+                        <p>{{ visitas_mes }}</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Pedidos de este mes</h3>
+                        <p>{{ pedidos_mes }}</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Horas reservadas</h3>
+                        <p>{{ reservas_mes }}</p>
+                    </div>
+                </div>
+            <div class="btns">
+                <a href="{% url 'generar_boleta' %}">
+                    <button class="btn-inf">Generar Boleta</button>
+                </a>
+                <a href="{% url 'generar_pedido' %}">
+                    <button class="btn-inf">Imprimir Pedidos</button>
+            </div>
+            </a>
         </div>
     </div>
 
+    <script>
+        var visitasData = {
+            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            datasets: [{
+                label: 'Visitas Mensuales',
+                data: [120, 150, 180, 130, 170, 160, 190, 200, 210, 220, 240, 250],
+                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderWidth: 1
+            }]
+        };
+
+        var ctx = document.getElementById('visitasChart').getContext('2d');
+        var visitasChart = new Chart(ctx, {
+            type: 'line',
+            data: visitasData,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,61 @@
+table {
+    border-collapse: collapse; 
+    width: 100%; 
+    margin-top: 20px; 
+}
+
+table th, table td {
+    border: 1px solid #ddd; 
+    text-align: left; 
+    padding: 10px; 
+}
+
+table th {
+    background-color: #f2f2f2; 
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9; 
+}
+
+table tr:hover {
+    background-color: #f1f1f1; 
+}
+
+.btn-imprimir {
+    background-color: #2196F3;
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-imprimir:hover {
+    background-color: #1976D2;
+}
+
+
+.cancelar-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1%;
+}
+
+.cancelar-button {
+    background-color: #BDBEB7; 
+}
+
+.cancelar-button:hover {
+    background-color: #7a7a7a;
+}    

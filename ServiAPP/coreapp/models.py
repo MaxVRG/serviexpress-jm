@@ -84,6 +84,7 @@ class Producto(models.Model):
     imagen = models.ImageField(upload_to='productos/', null=True, blank=True)
     nombre = models.CharField(max_length=100)
     cantidad = models.PositiveIntegerField()
+    precio = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
         return f'{self.nombre} - {self.proveedor.empresa}'
@@ -96,6 +97,30 @@ class Pedido(models.Model):
     cantidad = models.PositiveIntegerField()
     fecha_pedido = models.DateTimeField(default=now)
     id_pedido = models.AutoField(primary_key=True)
-
+    
     def __str__(self):
         return f"Pedido {self.id_pedido} - {self.proveedor.empresa}"
+    
+
+class Reserva(models.Model):
+    run = models.CharField(max_length=12)  
+    marca = models.CharField(max_length=50)
+    modelo = models.CharField(max_length=50)
+    fecha_reserva = models.DateField()
+    hora_reserva = models.TimeField() 
+
+    def __str__(self):
+        return f"Reserva {self.run} - {self.fecha_reserva} {self.hora_reserva}"
+    
+
+
+class Boleta(models.Model):
+    rut = models.CharField(max_length=12)  
+    direccion = models.CharField(max_length=255)  
+    fecha = models.DateField()  
+    descripcion_servicios = models.TextField()  
+    total = models.DecimalField(max_digits=10, decimal_places=2)  
+    impresa = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Boleta {self.rut} - {self.fecha}"

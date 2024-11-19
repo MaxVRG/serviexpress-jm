@@ -2,13 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import CustomUserCreationForm, CustomAuthenticationForm
-from .forms import EmpleadoForm
-from .forms import ServicioForm
-from .models import Proveedor, Producto,Pedido
-from .forms import ProveedorForm, ProductoForm
+from .forms import CustomUserCreationForm, BoletaForm, CustomAuthenticationForm, EmpleadoForm, ServicioForm, ProveedorForm, ProductoForm, ReservaForm
+from .models import Proveedor, Producto, Pedido
+from .models import Reserva, Boleta
 from django.shortcuts import get_object_or_404
 from django.utils.timezone import now
+from django.utils import timezone
+from datetime import timedelta
 
 def vista_pedidos(request):
     pedidos = Pedido.objects.all()
@@ -26,8 +26,12 @@ def reservahora(request):
 def adminlogin(request):
     return render(request, 'coreapp/login/adminlogin.html')
 
+def informes(request):
+    return render(request, 'coreapp/panel/informes.html')
+
 def adminpanel(request):
     return render(request, 'coreapp/adminpanel.html')
+
 def register_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -160,4 +164,67 @@ def eliminar_pedido(request, pedido_id):
     pedido = get_object_or_404(Pedido, id_pedido=pedido_id)
     pedido.delete()
     return redirect('verpedidos') 
+
+
+def reservahora(request):
+    if request.method == 'POST':
+        form = ReservaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Reserva realizada con éxito.')
+            return redirect('reservahora')
+        else:
+            messages.error(request, 'Por favor corrige los errores del formulario.')
+    else:
+        form = ReservaForm()
     
+    return render(request, 'coreapp/reservahora.html', {'form': form})
+
+
+
+def generar_boleta(request):
+    boleta = None  
+    
+    if request.method == 'POST':
+        form = BoletaForm(request.POST)
+        if form.is_valid():
+            boleta = form.save()  
+
+            return render(request, 'coreapp/panel/boleta.html', {'boleta': boleta, 'form': form})
+    else:
+        form = BoletaForm()
+
+
+    return render(request, 'coreapp/panel/boleta.html', {'form': form, 'boleta': boleta})
+
+
+def generar_pedido(request):
+    pedidos = Pedido.objects.all()  
+    total = sum(pedido.producto.precio * pedido.cantidad for pedido in pedidos)  
+
+    return render(request, 'coreapp/panel/generar_pedidos.html', {'pedidos': pedidos, 'total': total})
+
+
+
+def informes(request):
+
+    ahora = timezone.now()
+    inicio_mes = ahora.replace(day=1, hour=0, minute=0, second=0, microsecond=0)  
+    fin_mes = ahora.replace(day=28, hour=23, minute=59, second=59, microsecond=999999)  
+
+ 
+    pedidos_mes = Pedido.objects.filter(fecha_pedido__gte=inicio_mes, fecha_pedido__lte=fin_mes).count()
+
+    
+    reservas_mes = Reserva.objects.filter(fecha_reserva__gte=inicio_mes, fecha_reserva__lte=fin_mes).count()
+
+
+    visitas_mes = 240
+    visitas_mensuales = [120, 150, 180, 130, 170, 160, 190, 200, 210, 220, 240, 250]
+
+    return render(request, 'coreapp/panel/informes.html', {
+        'visitas_mes': visitas_mes,
+        'pedidos_mes': pedidos_mes,
+        'reservas_mes': reservas_mes,  
+        'visitas_mensuales': visitas_mensuales,
+    })

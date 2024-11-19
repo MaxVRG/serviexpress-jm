@@ -70,7 +70,9 @@
             </div>
 
             <div class="recuadros">
-                <H1>Informes</H1>
+                <a href="{% url 'informes' %}">
+                    <button class="btn-panel">Informes</button>
+                </a>
             </div>
         </div>
 
@@ -117,6 +119,10 @@
                             <div class="campo">
                                 <span class="campo-titulo">Cantidad:</span> 
                                 {{ producto.cantidad }}
+                            </div>
+                            <div class="campo">
+                                <span class="campo-titulo">Precio:</span> 
+                                {{ producto.precio|floatformat:0 }}
                             </div>
 
                             <div class="btn-two">

@@ -70,7 +70,9 @@
             </div>
 
             <div class="recuadros">
-                <H1>Informes</H1>
+                <a href="{% url 'informes' %}">
+                    <button class="btn-panel">Informes</button>
+                </a>
             </div>
         </div>
 
@@ -83,6 +85,7 @@
                         <th>Proveedor</th>
                         <th>Producto</th>
                         <th>Cantidad</th>
+                        <th>Precio</th>
                         <th>Fecha</th>
                         <th>Acciones</th>
                     </tr>
@@ -94,7 +97,8 @@
                             <td>{{ pedido.proveedor.empresa }}</td>
                             <td>{{ pedido.producto.nombre }}</td>
                             <td>{{ pedido.cantidad }}</td>
-                            <td>{{ pedido.fecha_pedido }}</td>
+                            <td>${{ pedido.producto.precio|floatformat:0 }}</td>
+                            <td>{{ pedido.fecha_pedido|date:"d-m-Y" }}</td>
                             <td>
                                 <form action="{% url 'eliminar_pedido' pedido.id_pedido %}" method="post" style="display: inline;">
                                     {% csrf_token %}
