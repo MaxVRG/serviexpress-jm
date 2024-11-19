@@ -1,12 +1,14 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serviexpress - Iniciar Sesión</title>
+    <title>Pedidos</title>
     <link rel="stylesheet" href="{% static 'coreapp/css/styles.css' %}">
     <link rel="stylesheet" href="{% static 'coreapp/css/adminpanel.css' %}">
+    <link rel="stylesheet" href="{% static 'coreapp/css/popup.css' %}">
+    <link rel="stylesheet" href="{% static 'coreapp/css/listapedidos.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
 </head>
 <body>
@@ -22,7 +24,7 @@
         </div>
         <div class="navbar-right">
             {% if user.is_authenticated %}
-            <span>Bienvenido, {{ user.nombre_completo }}</span>
+                <span>Bienvenido, {{ user.nombre_completo }}</span>
                 <a href="{% url 'logout' %}">
                     <button class="login-button">Cerrar Sesión</button>
                 </a>
@@ -36,11 +38,11 @@
             {% endif %}
         </div>
     </nav>
-    
-        <div class="services-container">
 
+    <div class="main-container">
+        <div class="services-container">
             <div class="name">
-            <h2><span class="tittle">{{ user.username }}</span></h2>
+                <h2><span class="tittle">{{ user.username }}</span></h2>
             </div>  
 
             <div class="recuadros">
@@ -70,9 +72,44 @@
             <div class="recuadros">
                 <H1>Informes</H1>
             </div>
-
-
         </div>
-        <script src="{% static 'coreapp/js/script.js' %}"></script>
-    </body>
-    </html>
+
+        <div class="container2">
+            <h1>Lista de Pedidos</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Pedido</th>
+                        <th>Proveedor</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Fecha</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pedido in pedidos %}
+                        <tr>
+                            <td>{{ pedido.id_pedido }}</td>
+                            <td>{{ pedido.proveedor.empresa }}</td>
+                            <td>{{ pedido.producto.nombre }}</td>
+                            <td>{{ pedido.cantidad }}</td>
+                            <td>{{ pedido.fecha_pedido }}</td>
+                            <td>
+                                <form action="{% url 'eliminar_pedido' pedido.id_pedido %}" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este pedido?')" class="btn-eliminar">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>    
+    
+            <br>
+            <button class="cancelar-button" onclick="window.history.back()">Cancelar</button>
+        </div>
+    </div>
+
+</body>
+</html>

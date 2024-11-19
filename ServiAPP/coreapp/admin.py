@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
-from .models import Empleado,Servicio,Producto,Proveedor
+from .models import Empleado,Servicio,Producto,Proveedor,Pedido
 
 class CustomUserAdmin(UserAdmin):
     list_display = ('email', 'username', 'run', 'nombre_completo', 'telefono', 'is_staff')
@@ -24,6 +24,7 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(Pedido)
 
 
 @admin.register(Empleado)

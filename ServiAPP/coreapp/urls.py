@@ -19,4 +19,7 @@ urlpatterns = [
     path('registro-servicio/', views.registrar_servicio, name='registro_servicio'),
     path('proveedores/', views.registro_proveedor, name='registro_proveedor'),
     path('proveedor/<int:id>/eliminar/', views.eliminar_proveedor, name='eliminar_proveedor'),
+    path('realizar_pedido/<int:proveedor_id>/', views.realizar_pedido, name='realizar_pedido'),
+    path('verpedidos/', views.vista_pedidos, name='verpedidos'),
+    path('eliminar_pedido/<int:pedido_id>/', views.eliminar_pedido, name='eliminar_pedido'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

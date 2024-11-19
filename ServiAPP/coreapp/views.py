@@ -5,9 +5,14 @@ from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from .forms import EmpleadoForm
 from .forms import ServicioForm
-from .models import Proveedor, Producto
+from .models import Proveedor, Producto,Pedido
 from .forms import ProveedorForm, ProductoForm
 from django.shortcuts import get_object_or_404
+from django.utils.timezone import now
+
+def vista_pedidos(request):
+    pedidos = Pedido.objects.all()
+    return render(request, 'coreapp/panel/verpedidos.html', {'pedidos': pedidos})
 
 def home(request):
     return render(request, 'coreapp/home.html')
@@ -110,7 +115,7 @@ def registro_proveedor(request):
             producto = producto_form.save(commit=False)
             producto.proveedor = proveedor
             producto.save()
-            return redirect('adminpanel') 
+            return redirect('registro_proveedor') 
     else:
         proveedor_form = ProveedorForm()
         producto_form = ProductoForm()
@@ -126,4 +131,33 @@ def eliminar_proveedor(request, id):
     if request.method == "POST":
         proveedor = get_object_or_404(Proveedor, id=id)
         proveedor.delete()
-        return redirect('registro_proveedor')  # Redirige a la lista después de eliminar
+        return redirect('registro_proveedor')
+    
+
+def realizar_pedido(request, proveedor_id):
+    proveedor = get_object_or_404(Proveedor, id=proveedor_id)
+    productos = proveedor.productos.all()
+
+    if request.method == 'POST':
+        producto_id = request.POST.get('producto')
+        cantidad = request.POST.get('cantidad')
+        producto = get_object_or_404(Producto, id=producto_id)
+
+        Pedido.objects.create(
+            proveedor=proveedor,
+            producto=producto,
+            cantidad=cantidad,
+            fecha_pedido=now()
+        )
+        return redirect('registro_proveedor')  
+
+    return render(request, 'coreapp/panel/pedidos.html', {'proveedor': proveedor, 'productos': productos})
+
+
+
+
+def eliminar_pedido(request, pedido_id):
+    pedido = get_object_or_404(Pedido, id_pedido=pedido_id)
+    pedido.delete()
+    return redirect('verpedidos') 
+    

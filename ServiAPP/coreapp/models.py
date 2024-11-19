@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
+from django.utils.timezone import now
 
 class CustomUser(AbstractUser):
     run = models.CharField(
@@ -86,3 +87,15 @@ class Producto(models.Model):
 
     def __str__(self):
         return f'{self.nombre} - {self.proveedor.empresa}'
+    
+
+
+class Pedido(models.Model):
+    proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE, related_name='pedidos')
+    producto = models.ForeignKey('Producto', on_delete=models.CASCADE, related_name='pedidos')
+    cantidad = models.PositiveIntegerField()
+    fecha_pedido = models.DateTimeField(default=now)
+    id_pedido = models.AutoField(primary_key=True)
+
+    def __str__(self):
+        return f"Pedido {self.id_pedido} - {self.proveedor.empresa}"

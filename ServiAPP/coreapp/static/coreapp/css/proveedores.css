@@ -132,3 +132,25 @@
 .btn-submit:hover{
     background-color: #4d5c9e;
 }
+
+
+.btn-pedido{
+    background-color: #6d87fd;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 11px;
+    box-shadow: none;
+}
+
+.btn-pedido:hover{
+    background-color: #4d5c9e;
+}
+
+.btn-two{
+
+display: inline-block;
+
+}

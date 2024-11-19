@@ -64,7 +64,9 @@
             </div>
 
             <div class="recuadros">
-                <h1>Pedidos</h1>
+                <a href="{% url 'verpedidos' %}">
+                    <button class="btn-panel">Pedidos</button>
+                </a>
             </div>
 
             <div class="recuadros">
@@ -117,10 +119,16 @@
                                 {{ producto.cantidad }}
                             </div>
 
-                            <form method="POST" action="{% url 'eliminar_proveedor' proveedor.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn-eliminar">Eliminar Proveedor</button>
-                            </form>
+                            <div class="btn-two">
+                                <form method="POST" action="{% url 'eliminar_proveedor' proveedor.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-eliminar">Eliminar Proveedor</button>
+                                </form>
+                                
+                                <a href="{% url 'realizar_pedido' proveedor.id %}">
+                                    <button class="btn-pedido">Realizar Pedido</button>
+                                </a>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
@@ -133,11 +141,6 @@
             <button class="cancelar-button" onclick="window.history.back()">Cancelar</button>
         </div>
     </div>
-
-
-
-
-
 
 
 </body>
